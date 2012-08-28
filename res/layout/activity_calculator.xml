@@ -1,11 +1,12 @@
-<LinerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent" 
+    android:orientation="vertical">
 
    <TextView
        android:id="@+id/displayPanel"
-       android:layout_width="match_parent"
+       android:layout_width="fill_parent"
        android:layout_height="wrap_content"
        android:layout_marginBottom="20dp"
        android:background="#ffffff"
@@ -73,6 +74,7 @@
            <Button
                android:id="@+id/keypad7"
                android:text="7" 
+               android:onClick="numKeyOnClick"
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -81,6 +83,7 @@
            <Button
                android:id="@+id/keypad8"
                android:text="8" 
+               android:onClick="numKeyOnClick" 
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -89,6 +92,7 @@
            <Button
                android:id="@+id/keypad9"
                android:text="9" 
+               android:onClick="numKeyOnClick"
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -97,6 +101,7 @@
            <Button
                android:id="@+id/keypadDiv"
                android:text="/" 
+               android:onClick="operatorKeyOnClick"
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -105,13 +110,15 @@
 
        <TableRow
            android:id="@+id/tableRow3"
-           android:layout_weight="1"
+           android:layout_weight="1" 
+               android:onClick="numKeyOnClick"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content" >
            
            <Button
                android:id="@+id/keypad4"
                android:text="4" 
+               android:onClick="numKeyOnClick" 
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -120,6 +127,7 @@
            <Button
                android:id="@+id/keypad5"
                android:text="5" 
+               android:onClick="numKeyOnClick" 
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -128,6 +136,7 @@
            <Button
                android:id="@+id/keypad6"
                android:text="6" 
+               android:onClick="numKeyOnClick" 
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -135,7 +144,8 @@
            
            <Button
                android:id="@+id/keypadMulti"
-               android:text="*" 
+               android:text="*"
+               android:onClick="operatorKeyOnClick" 
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -151,6 +161,7 @@
            <Button
                android:id="@+id/keypad1"
                android:text="1" 
+               android:onClick="numKeyOnClick" 
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -159,6 +170,7 @@
            <Button
                android:id="@+id/keypad2"
                android:text="2" 
+               android:onClick="numKeyOnClick" 
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -167,6 +179,7 @@
            <Button
                android:id="@+id/keypad3"
                android:text="3" 
+               android:onClick="numKeyOnClick" 
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -174,7 +187,8 @@
            
            <Button
                android:id="@+id/keypadSub"
-               android:text="-" 
+               android:text="-"
+               android:onClick="operatorKeyOnClick" 
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -190,6 +204,7 @@
            <Button
                android:id="@+id/keypad0"
                android:text="0" 
+               android:onClick="numKeyOnClick" 
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -198,6 +213,7 @@
            <Button
                android:id="@+id/keypadDot"
                android:text="." 
+               android:onClick="numKeyOnClick" 
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -205,7 +221,8 @@
            
            <Button
                android:id="@+id/keypadEq"
-               android:text="=" 
+               android:text="="
+               android:onClick="operatorKeyOnClick" 
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -213,7 +230,8 @@
            
            <Button
                android:id="@+id/keypadAdd"
-               android:text="+" 
+               android:text="+"
+               android:onClick="operatorKeyOnClick" 
                android:padding="0dp"
                android:textSize="24sp"
                android:layout_height="match_parent"
@@ -222,4 +240,4 @@
 
    </TableLayout>
 
-</LinerLayout>
+</LinearLayout>
