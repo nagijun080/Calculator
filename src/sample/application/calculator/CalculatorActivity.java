@@ -12,16 +12,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CalculatorActivity extends Activity {
 
 	String strTemp="";
 	String strResult="0";
-	int operator=0;
-	
-	String str;
-	Integer num1 = 0,num2 = 0;
-	Boolean dot = false;
+	Integer operator=0;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,30 +80,58 @@ public class CalculatorActivity extends Activity {
 	
 	public void operatorKeyOnClick(View v) {
 		
-		if(operator != 0) {
-			if(strTemp.length() > 0) {
-				strResult = doCalc();
-				showNumber(strResult);
+		if(this.operator != 0) {
+			if(this.strTemp.length() > 0) {
+				this.strResult = this.doCalc();
+				this.showNumber(this.strResult);
 			}
 		} else {
-			if(strTemp.length() > 0) {
-				strResult = strTemp;
+			if(this.strTemp.length() > 0) {
+				this.strResult = this.strTemp;
 			}
 		}
 		
-		strTemp="";
+		this.strTemp="";//String型の長さ０のインスタンスが入っている。
 		
 		if(v.getId() == R.id.keypadEq) {
-			operator = 0;
+			this.operator = 0;
 		} else {
-			operator = v.getId();
+			this.operator = v.getId();
 		}
 		
 	}
 
 	private String doCalc() {
 		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		BigDecimal bd1 = new BigDecimal(strResult);
+		BigDecimal bd2 = new BigDecimal(strTemp);
+		BigDecimal result = BigDecimal.ZERO;
+		
+		switch(operator) {
+		case R.id.keypadAdd:
+			result = bd1.add(bd2);
+			break;
+		case R.id.keypadSub:
+			result = bd1.subtract(bd2);
+			break;
+		case R.id.keypadMulti:
+			result = bd1.multiply(bd2);
+			break;
+		case R.id.keypadDiv:
+			if(!bd2.equals(BigDecimal.ZERO)) {
+				result = bd1.divide(bd2,12,3);
+			} else {
+				Toast toast = Toast.makeText(this,R.string.toast_div_by_zero,1000);
+				toast.show();
+			}
+			break;
+		}
+		
+		if (result.toString().indexOf(".") >= 0) {
+			return result.toString().replace("¥¥.0+$|0+$", "");
+		} else {
+			return result.toString();
+		}
 	}
 
 }
