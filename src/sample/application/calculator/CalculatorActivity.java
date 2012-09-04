@@ -2,6 +2,7 @@ package sample.application.calculator;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 
@@ -16,17 +17,25 @@ import android.widget.Toast;
 
 public class CalculatorActivity extends Activity {
 
-	String strTemp="";
-	String strResult="0";
-	Integer operator=0;
+	public String strTemp="";
+	public String strResult="0";
+	public Integer operator=0;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
+        readPreferences();
     }
 
     @Override
+	protected void onStop() {
+		// TODO 自動生成されたメソッド・スタブ
+		super.onStop();
+		writePreferences();
+	}
+
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_calculator, menu);
         return true;
@@ -132,6 +141,24 @@ public class CalculatorActivity extends Activity {
 		} else {
 			return result.toString();
 		}
+	}
+	
+	public void writePreferences() {
+		SharedPreferences prefs = getSharedPreferences("CalcPrefs", MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString("strTemp", strTemp);
+		editor.putString("strResult", strResult);
+		editor.putInt("operator", operator);
+		editor.putString("strDisplay", ((TextView) findViewById(R.id.displayPanel)).getText().toString());
+		editor.commit();
+	}
+	
+	public void readPreferences() {
+		SharedPreferences prefs = getSharedPreferences("CalcPrefs",MODE_PRIVATE);
+		strTemp = prefs.getString("strTemp", "");
+		strResult = prefs.getString("strResult", "0");
+		operator = prefs.getInt("operator", 0);
+		((TextView)findViewById(R.id.displayPanel)).setText(prefs.getString("strDisplay","0"));
 	}
 
 }
