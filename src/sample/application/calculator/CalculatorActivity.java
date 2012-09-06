@@ -1,6 +1,7 @@
 package sample.application.calculator;
 
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -42,6 +43,11 @@ public class CalculatorActivity extends Activity {
     }
     
     public void numKeyOnClick(View v) {
+    	((Vibrator)getSystemService(VIBRATOR_SERVICE)).vibrate(50);
+    	
+    	TextView sp = (TextView)findViewById(R.id.subPanel);
+    	String strSp = sp.getText().toString();
+    	if (strSp.indexOf("=") == strSp.length() - 1) sp.setText("");
     	
     	String strInkey = ((Button)v).getText().toString();
     	
@@ -82,22 +88,56 @@ public class CalculatorActivity extends Activity {
 		((TextView)findViewById(R.id.displayPanel)).setText(fText);
 	}
 	
-	public void functionKeyOnClick() {
+	public void functionKeyOnClick(View v) {
 		
+		((Vibrator)getSystemService(VIBRATOR_SERVICE)).vibrate(50);
 		
+		switch(v.getId()) {
+		case R.id.keypadAC:
+			strTemp = "";
+			strResult = "0";
+			operator = 0;
+			((TextView)findViewById(R.id.subPanel)).setText("");
+			break;
+		case R.id.keypadC:
+			strTemp = "";
+			break;
+		case R.id.keypadBC:
+			if (strTemp.length() == 0) {
+				return;
+			} else {
+				strTemp = strTemp.substring(0,strTemp.length() - 1);
+			}
+			break;
+		case R.id.keypadCopy:
+			ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+			cm.setText(((TextView)findViewById(R.id.displayPanel)).getText());
+			return;
+		}
+		showNumber(strTemp);
 	}
 	
 	public void operatorKeyOnClick(View v) {
 		
+		((Vibrator)getSystemService(VIBRATOR_SERVICE)).vibrate(50);
+		
+		TextView sp = (TextView) findViewById(R.id.subPanel);
+		String op2 = ((Button)findViewById(v.getId())).getText().toString();
+		
 		if(this.operator != 0) {
+			String op1 = ((Button)findViewById(operator)).getText().toString();
 			if(this.strTemp.length() > 0) {
+				sp.setText(strResult + op1 + strTemp + op2);
 				this.strResult = this.doCalc();
 				this.showNumber(this.strResult);
+			} else {
+				sp.setText(strResult + op2);
 			}
 		} else {
 			if(this.strTemp.length() > 0) {
 				this.strResult = this.strTemp;
 			}
+			sp.setText(strResult + op2);
 		}
 		
 		this.strTemp="";//String型の長さ０のインスタンスが入っている。
@@ -150,6 +190,7 @@ public class CalculatorActivity extends Activity {
 		editor.putString("strResult", strResult);
 		editor.putInt("operator", operator);
 		editor.putString("strDisplay", ((TextView) findViewById(R.id.displayPanel)).getText().toString());
+		editor.putString("strSubDfisplay",((TextView)findViewById(R.id.subPanel)).getText().toString());
 		editor.commit();
 	}
 	
@@ -159,6 +200,7 @@ public class CalculatorActivity extends Activity {
 		strResult = prefs.getString("strResult", "0");
 		operator = prefs.getInt("operator", 0);
 		((TextView)findViewById(R.id.displayPanel)).setText(prefs.getString("strDisplay","0"));
+		((TextView)findViewById(R.id.subPanel)).setText(prefs.getString("strSubDisplay","0"));
 	}
 
 }
